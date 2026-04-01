@@ -13,6 +13,8 @@ public class ModConfig {
 
     private final File CONFIG_FILE;
 
+    private static ModConfig instance;
+
     public static int maxCanal = 16;
     public static int speakerDistance = 32;
     public static boolean voiceDuplication = false;
@@ -25,9 +27,17 @@ public class ModConfig {
     public static boolean crossDimensionsEnabled = true;
     public static boolean applyDimensionScale = true;
     public static boolean applyRadioEffect = true;
+    public static float soundVolume = 0.5f;
 
     public ModConfig(Path ConfigFolder) {
         this.CONFIG_FILE = new File(ConfigFolder.toString(), "WalkieTalkie.properties");
+        instance = this;
+    }
+
+    public static void save() {
+        if (instance != null) {
+            instance.createConfig(mapConfig());
+        }
     }
 
     public void loadModConfig() {
@@ -52,6 +62,7 @@ public class ModConfig {
                 crossDimensionsEnabled = Boolean.parseBoolean(properties.getProperty("cross-dimensions-enabled", "true"));
                 applyDimensionScale = Boolean.parseBoolean(properties.getProperty("apply-dimension-scale", "true"));
                 applyRadioEffect = Boolean.parseBoolean(properties.getProperty("apply-radio-effect", "true"));
+                soundVolume = Float.parseFloat(properties.getProperty("sound-volume", "0.5"));
 
                 createConfig(mapConfig());
 
@@ -85,6 +96,7 @@ public class ModConfig {
         config.put("apply-dimension-scale", String.valueOf(applyDimensionScale));
         config.put("\n# Misc settings", "");
         config.put("apply-radio-effect", String.valueOf(applyRadioEffect));
+        config.put("sound-volume", String.valueOf(soundVolume));
 
         return config;
     }

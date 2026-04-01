@@ -12,6 +12,7 @@
 
   "gui.walkietalkie.speaker.title": "Altavoz",
   "gui.walkietalkie.title": "Walkie-Talkie",
+  "gui.walkietalkie.volume": "Volumen de Efectos: %s%%",
 
   "advancement.walkietalkie.root.title": "Walkie Talkie",
   "advancement.walkietalkie.root.description": "Descubre el poder de la comunicación con el walkie-talkie.",

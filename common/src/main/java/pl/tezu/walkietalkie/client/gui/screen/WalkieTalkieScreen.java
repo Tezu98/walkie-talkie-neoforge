@@ -4,6 +4,7 @@ import dev.architectury.networking.NetworkManager;
 import pl.tezu.walkietalkie.Constants;
 import pl.tezu.walkietalkie.client.gui.widget.CanalSlider;
 import pl.tezu.walkietalkie.client.gui.widget.ToggleImageButton;
+import pl.tezu.walkietalkie.client.gui.widget.VolumeSlider;
 import pl.tezu.walkietalkie.config.ModConfig;
 import pl.tezu.walkietalkie.item.WalkieTalkieItem;
 import pl.tezu.walkietalkie.network.packet.c2s.walkietalkie.ButtonWalkieTalkieC2SPacket;
@@ -22,7 +23,7 @@ public class WalkieTalkieScreen extends Screen {
     private static WalkieTalkieScreen instance;
 
     private final int xSize = 195;
-    private final int ySize = 76;
+    private final int ySize = 110;
 
     private int guiLeft;
     private int guiTop;
@@ -38,6 +39,7 @@ public class WalkieTalkieScreen extends Screen {
     private CanalSlider canalSlider;
     private Button canalAddButton;
     private Button canalRemoveButton;
+    private VolumeSlider volumeSlider;
 
     private static final ResourceLocation BG_TEXTURE = ResourceLocation.fromNamespaceAndPath(Constants.MOD_ID, "textures/gui/gui_walkietalkie.png");
     private static final ResourceLocation MUTE_TEXTURE = ResourceLocation.fromNamespaceAndPath("voicechat", "textures/icons/microphone_button.png");
@@ -61,10 +63,10 @@ public class WalkieTalkieScreen extends Screen {
         this.guiLeft = (this.width - xSize) / 2;
         this.guiTop = (this.height - ySize) / 2;
 
-        muteButton = new ToggleImageButton(guiLeft + 8, guiTop + ySize - 8 - 20, MUTE_TEXTURE, button -> sendButton(1, !mute), mute);
+        muteButton = new ToggleImageButton(guiLeft + 8, guiTop + 82, MUTE_TEXTURE, button -> sendButton(1, !mute), mute);
         this.addRenderableWidget(muteButton);
 
-        activateButton = new ToggleImageButton(guiLeft + 30, guiTop + ySize - 28, ACTIVATE_TEXTURE, button -> sendButton(0, !activate), activate);
+        activateButton = new ToggleImageButton(guiLeft + 30, guiTop + 82, ACTIVATE_TEXTURE, button -> sendButton(0, !activate), activate);
         this.addRenderableWidget(activateButton);
 
         canalSlider = this.addRenderableWidget(new WTCanalSlider(this.width / 2 - 70, guiTop + 20, 140, 20, Component.empty()));
@@ -72,6 +74,7 @@ public class WalkieTalkieScreen extends Screen {
         canalAddButton = this.addRenderableWidget(Button.builder(Component.literal(">"), button -> sendCanal(canal + 1)).bounds(this.width / 2 - 10 + 80, guiTop + 20, 20, 20).build());
         canalRemoveButton = this.addRenderableWidget(Button.builder(Component.literal("<"), button -> sendCanal(canal - 1)).bounds(this.width / 2 - 10 - 80, guiTop + 20, 20, 20).build());
 
+        volumeSlider = this.addRenderableWidget(new WTVolumeSlider(this.width / 2 - 70, guiTop + 42, 140, 20, ModConfig.soundVolume));
     }
 
     @Override
@@ -123,6 +126,10 @@ public class WalkieTalkieScreen extends Screen {
             this.canalSlider.mouseReleased(mouseX, mouseY, button);
             return true;
         }
+        if (this.volumeSlider.isHoveredOrFocused()) {
+            this.volumeSlider.mouseReleased(mouseX, mouseY, button);
+            return true;
+        }
         return this.getChildAt(mouseX, mouseY).filter(element -> element.mouseReleased(mouseX, mouseY, button)).isPresent();
     }
 
@@ -136,6 +143,19 @@ public class WalkieTalkieScreen extends Screen {
         @Override
         protected void updateCanal(int canal) {
             sendCanal(canal);
+        }
+    }
+
+    class WTVolumeSlider extends VolumeSlider {
+
+        public WTVolumeSlider(int x, int y, int width, int height, float initialVolume) {
+            super(x, y, width, height, initialVolume);
+        }
+
+        @Override
+        protected void onVolumeChanged(float volume) {
+            ModConfig.soundVolume = volume;
+            ModConfig.save();
         }
     }
 

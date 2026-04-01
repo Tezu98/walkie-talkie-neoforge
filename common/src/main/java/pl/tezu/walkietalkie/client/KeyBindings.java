@@ -5,6 +5,7 @@ import dev.architectury.event.events.client.ClientTickEvent;
 import dev.architectury.networking.NetworkManager;
 import dev.architectury.registry.client.keymappings.KeyMappingRegistry;
 import pl.tezu.walkietalkie.ModSoundEvents;
+import pl.tezu.walkietalkie.config.ModConfig;
 import pl.tezu.walkietalkie.network.packet.c2s.ActivateKeyPressedC2SPacket;
 import pl.tezu.walkietalkie.network.packet.c2s.PushToTalkC2SPacket;
 import net.minecraft.client.KeyMapping;
@@ -33,7 +34,7 @@ public class KeyBindings {
 
         ClientTickEvent.CLIENT_POST.register(minecraft -> {
             while (ACTIVATE.consumeClick()) {
-                NetworkManager.sendToServer(ActivateKeyPressedC2SPacket.INSTANCE);
+                NetworkManager.sendToServer(new ActivateKeyPressedC2SPacket(ModConfig.soundVolume));
             }
 
             boolean pttDown = PUSH_TO_TALK.isDown();
@@ -42,7 +43,7 @@ public class KeyBindings {
                 if (minecraft.player != null) {
                     minecraft.player.playSound(
                         pttDown ? ModSoundEvents.ON_SOUND_EVENT.get() : ModSoundEvents.OFF_SOUND_EVENT.get(),
-                        1.0f, 1.0f);
+                        ModConfig.soundVolume, 1.0f);
                 }
                 pttWasDown = pttDown;
             }

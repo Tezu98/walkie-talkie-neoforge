@@ -15,6 +15,9 @@ import net.neoforged.neoforge.network.handling.IPayloadContext;
  */
 @OnlyIn(Dist.CLIENT)
 public class ClientHandlers {
+    private ClientHandlers() {
+    }
+
 
     public static void handleUpdateWalkieTalkie(UpdateWalkieTalkieS2CPacket packet, IPayloadContext ctx) {
         ctx.enqueueWork(() -> WalkieTalkieScreen.getInstance().updateButtons(packet.stack()));
