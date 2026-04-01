@@ -3,6 +3,7 @@ package pl.tezu.walkietalkie.network;
 import dev.architectury.networking.NetworkManager;
 import pl.tezu.walkietalkie.network.packet.c2s.ActivateKeyPressedC2SPacket;
 import pl.tezu.walkietalkie.network.packet.c2s.PushToTalkC2SPacket;
+import pl.tezu.walkietalkie.network.packet.c2s.TransmitFromHandC2SPacket;
 import pl.tezu.walkietalkie.network.packet.c2s.speaker.ButtonSpeakerC2SPacket;
 import pl.tezu.walkietalkie.network.packet.c2s.speaker.CanalSpeakerC2SPacket;
 import pl.tezu.walkietalkie.network.packet.c2s.walkietalkie.ButtonWalkieTalkieC2SPacket;
@@ -21,6 +22,7 @@ public class ModMessages {
 
         NetworkManager.registerReceiver(NetworkManager.Side.C2S, ActivateKeyPressedC2SPacket.TYPE, ActivateKeyPressedC2SPacket.STREAM_CODEC, ActivateKeyPressedC2SPacket::receive);
         NetworkManager.registerReceiver(NetworkManager.Side.C2S, PushToTalkC2SPacket.TYPE, PushToTalkC2SPacket.STREAM_CODEC, PushToTalkC2SPacket::receive);
+        NetworkManager.registerReceiver(NetworkManager.Side.C2S, TransmitFromHandC2SPacket.TYPE, TransmitFromHandC2SPacket.STREAM_CODEC, TransmitFromHandC2SPacket::receive);
     }
 
     public static void registerS2CPackets() {

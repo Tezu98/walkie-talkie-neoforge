@@ -29,6 +29,7 @@ public class ModConfig {
     public static boolean applyRadioEffect = true;
     public static float effectVolume = 0.5f;
     public static boolean requireHotbarForListening = false;
+    public static boolean transmitFromHand = true;
 
     public ModConfig(Path ConfigFolder) {
         this.CONFIG_FILE = new File(ConfigFolder.toString(), "WalkieTalkie.properties");
@@ -65,6 +66,7 @@ public class ModConfig {
                 applyRadioEffect = Boolean.parseBoolean(properties.getProperty("apply-radio-effect", "true"));
                 effectVolume = Float.parseFloat(properties.getProperty("effect-volume", "0.5"));
                 requireHotbarForListening = Boolean.parseBoolean(properties.getProperty("require-hotbar-for-listening", "false"));
+                transmitFromHand = Boolean.parseBoolean(properties.getProperty("transmit-from-hand", "true"));
 
                 createConfig(mapConfig());
 
@@ -100,6 +102,7 @@ public class ModConfig {
         config.put("apply-radio-effect", String.valueOf(applyRadioEffect));
         config.put("effect-volume", String.valueOf(effectVolume));
         config.put("require-hotbar-for-listening", String.valueOf(requireHotbarForListening));
+        config.put("transmit-from-hand", String.valueOf(transmitFromHand));
 
         return config;
     }
