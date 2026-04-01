@@ -4,6 +4,7 @@ import com.mojang.blaze3d.platform.InputConstants;
 import dev.architectury.event.events.client.ClientTickEvent;
 import dev.architectury.networking.NetworkManager;
 import dev.architectury.registry.client.keymappings.KeyMappingRegistry;
+import fr.flaton.walkietalkie.ModSoundEvents;
 import fr.flaton.walkietalkie.network.packet.c2s.ActivateKeyPressedC2SPacket;
 import fr.flaton.walkietalkie.network.packet.c2s.PushToTalkC2SPacket;
 import net.minecraft.client.KeyMapping;
@@ -38,6 +39,11 @@ public class KeyBindings {
             boolean pttDown = PUSH_TO_TALK.isDown();
             if (pttDown != pttWasDown) {
                 NetworkManager.sendToServer(new PushToTalkC2SPacket(pttDown));
+                if (minecraft.player != null) {
+                    minecraft.player.playSound(
+                        pttDown ? ModSoundEvents.ON_SOUND_EVENT.get() : ModSoundEvents.OFF_SOUND_EVENT.get(),
+                        1.0f, 1.0f);
+                }
                 pttWasDown = pttDown;
             }
         });
