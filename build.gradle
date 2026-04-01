@@ -1,6 +1,17 @@
+buildscript {
+    repositories {
+        maven { url "https://maven.architectury.dev/" }
+    }
+    configurations.all {
+        resolutionStrategy {
+            force "dev.architectury:architectury-transformer:5.2.89"
+        }
+    }
+}
+
 plugins {
     id "architectury-plugin" version "3.4-SNAPSHOT"
-    id "dev.architectury.loom" version "1.7-SNAPSHOT" apply false
+    id "dev.architectury.loom" version "1.11-SNAPSHOT" apply false
 }
 
 architectury {
@@ -67,6 +78,11 @@ allprojects {
         // for more information about repositories.
 
         maven { url = 'https://maven.maxhenkel.de/repository/public' }
+
+        maven {
+            name = "Illusive Soulworks maven"
+            url = "https://maven.theillusivec4.top/"
+        }
 
         exclusiveContent {
             forRepository {

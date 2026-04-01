@@ -1,36 +1,28 @@
 # Minecraft Walkie-Talkie Mod
 ![image](https://raw.githubusercontent.com/Flaton1/walkie-talkie-mod/1.20.4/gallery/walkie_talkie_large.png)
 <!-- prettier-ignore-start -->
-> **Warning**
+
+> **Fork Warning**
 >
-> This is not an official addon. **Please don't go to the Simple Voice Chat discord server for support! Instead, please use [GitHub issues](https://github.com/Flaton1/walkie-talkie-mod/issues)
-> for support.** I'll try to provide support as soon as possible but there is no guarantee for how long it will take.
->
-> This mod **requires [Simple Voice Chat](https://github.com/henkelmax/simple-voice-chat) and [Architectury API](https://github.com/architectury/architectury-api)**
+> This mod is a fork of [Simple Voice Chat Addon - Walkie-Talkie](https://github.com/Flaton1/walkie-talkie-mod)
 > 
-> If you use Fabric, this mod **require [Fabric API](https://github.com/FabricMC/fabric).**
+>All the credits for the original mod go to the original author, **Flaton1**. This fork is maintained by **Tezu** and as of now, it does not support Fabric.
+> 
+> This mod **requires [Simple Voice Chat](https://github.com/henkelmax/simple-voice-chat) and [Architectury API](https://github.com/architectury/architectury-api)**
 <!-- prettier-ignore-end -->
 
 This mod adds two-way radios with different upgrades.
 
 ## Versions maintained
-| Minecraft Version | Fabric | Forge | NeoForge |
-|-------------------|--------|-------|--------|
-| 1.21.1            | ✅      | ❌     | ✅      |
-| 1.20.4            | ✅      | ✅     | ❌      |
-| 1.20.2            | ❌      | ❌     | ❌      |
-| 1.20.1            | ✅      | ✅     | ❌      |
-| 1.19.4            | ❌      | ❌     | ❌      |
-| 1.19.3            | ❌      | ❌     | ❌      |
-| 1.19.2            | ✅      | ✅     | ❌      |
-| 1.18.2            | ✅      | ✅     | ❌      |
-| 1.16.5            | ❌      | ✅     | ❌      |
+| Minecraft Version | Fabric | NeoForge |
+|-------------------|--------|----------|
+| 1.21.1            | ❌      |  ✅       |
 
 ## How to use
 ### Walkie-Talkie:
 + Right-click to open the Walkie-Talkie menu
-+ Turn on the walkie-talkie
-+ To speak, **make sure the walkie-talkie is in your hand**
++ Turn on the walkie-talkie (**B** by default)
++ You can configure if you want to transmit your voice when the walkie-talkie is on or only when you hold the keybind to talk (default: Left Alt)
 + To listen, **make sure the walkie-talkie is in your hotbar**
 ### Speaker:
 + Right-click on the speaker to open menu

@@ -14,12 +14,27 @@ configurations {
     compileClasspath.extendsFrom common
     runtimeClasspath.extendsFrom common
     developmentNeoForge.extendsFrom common
+
+    all {
+        resolutionStrategy {
+            force 'org.ow2.asm:asm:9.7'
+            force 'org.ow2.asm:asm-commons:9.7'
+            force 'org.ow2.asm:asm-tree:9.7'
+            force 'org.ow2.asm:asm-util:9.7'
+            force 'org.ow2.asm:asm-analysis:9.7'
+        }
+    }
 }
 
 dependencies {
     neoForge "net.neoforged:neoforge:${rootProject.neoforge_version}"
 
     modApi "dev.architectury:architectury-neoforge:${rootProject.architectury_version}"
+
+    // Compile against only the API artifact (optional dependency - not required at runtime)
+    compileOnly "top.theillusivec4.curios:curios-neoforge:${curios_version}:api"
+    // Load the full Curios jar in the dev environment only (not shipped as a dependency)
+    modLocalRuntime "top.theillusivec4.curios:curios-neoforge:${curios_version}"
 
     common(project(path: ":common", configuration: "namedElements")) { transitive false }
     shadowCommon(project(path: ":common", configuration: "transformProductionNeoForge")) { transitive = false }
@@ -51,6 +66,8 @@ remapJar {
 jar {
     archiveClassifier.set("dev")
 }
+
+sourceSets.main.resources { srcDir 'src/generated/resources' }
 
 sourcesJar {
     def commonSources = project(":common").sourcesJar

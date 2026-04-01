@@ -1,0 +1,8 @@
+{
+  "size": 1,
+  "operation": "SET",
+  "icon": "walkietalkie:slot/empty_walkie_talkie_slot",
+  "add_cosmetic_slot": false,
+  "validator": "curios:tag"
+}
+
