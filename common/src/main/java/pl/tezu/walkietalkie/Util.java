@@ -99,9 +99,37 @@ public class Util {
     }
 
     public static List<ItemStack> getActivatedWalkieTalkies(ServerPlayer player) {
-        List<ItemStack> walkieTalkies = getWalkieTalkies(player);
+        List<ItemStack> walkieTalkies = getWalkieTalkiesForListening(player);
         walkieTalkies.removeIf(walkieTalkie -> !WalkieTalkieItem.isActivate(walkieTalkie));
         return walkieTalkies;
+    }
+
+    /**
+     * Returns walkie-talkies that count for listening, respecting the
+     * {@code require-hotbar-for-listening} server config option.
+     * When {@code true}, only hotbar slots (0-8) and the offhand are checked.
+     * When {@code false} (default), the entire inventory is checked.
+     */
+    public static List<ItemStack> getWalkieTalkiesForListening(Player player) {
+        List<ItemStack> itemStacks = new ArrayList<>();
+        Inventory playerInventory = player.getInventory();
+
+        List<ItemStack> slots;
+        if (ModConfig.requireHotbarForListening) {
+            // Hotbar is slots 0-8 in playerInventory.items
+            slots = new ArrayList<>(playerInventory.items.subList(0, 9));
+            slots.addAll(playerInventory.offhand);
+        } else {
+            slots = new ArrayList<>(playerInventory.items);
+            slots.addAll(playerInventory.offhand);
+        }
+
+        for (ItemStack stack : slots) {
+            if (!stack.isEmpty() && stack.getItem() instanceof WalkieTalkieItem) {
+                itemStacks.add(stack);
+            }
+        }
+        return itemStacks;
     }
 
     public static Set<Canal> getCanals(ServerPlayer player) {
