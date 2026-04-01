@@ -5,6 +5,7 @@ import dev.architectury.event.events.client.ClientTickEvent;
 import dev.architectury.networking.NetworkManager;
 import dev.architectury.registry.client.keymappings.KeyMappingRegistry;
 import pl.tezu.walkietalkie.ModSoundEvents;
+import pl.tezu.walkietalkie.Util;
 import pl.tezu.walkietalkie.config.ModConfig;
 import pl.tezu.walkietalkie.network.packet.c2s.ActivateKeyPressedC2SPacket;
 import pl.tezu.walkietalkie.network.packet.c2s.PushToTalkC2SPacket;
@@ -34,16 +35,24 @@ public class KeyBindings {
 
         ClientTickEvent.CLIENT_POST.register(minecraft -> {
             while (ACTIVATE.consumeClick()) {
-                NetworkManager.sendToServer(new ActivateKeyPressedC2SPacket(ModConfig.soundVolume));
+                NetworkManager.sendToServer(new ActivateKeyPressedC2SPacket(ModConfig.effectVolume));
             }
 
             boolean pttDown = PUSH_TO_TALK.isDown();
-            if (pttDown != pttWasDown) {
+            boolean hasActivatedWT = minecraft.player != null && Util.getWalkieTalkieActivated(minecraft.player) != null;
+
+            if (!hasActivatedWT) {
+                // If the walkie talkie is off and PTT was considered held, release it server-side
+                if (pttWasDown) {
+                    NetworkManager.sendToServer(new PushToTalkC2SPacket(false));
+                    pttWasDown = false;
+                }
+            } else if (pttDown != pttWasDown) {
                 NetworkManager.sendToServer(new PushToTalkC2SPacket(pttDown));
                 if (minecraft.player != null) {
                     minecraft.player.playSound(
                         pttDown ? ModSoundEvents.ON_SOUND_EVENT.get() : ModSoundEvents.OFF_SOUND_EVENT.get(),
-                        ModConfig.soundVolume, 1.0f);
+                        ModConfig.effectVolume, 1.0f);
                 }
                 pttWasDown = pttDown;
             }

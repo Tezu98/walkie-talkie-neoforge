@@ -4,9 +4,9 @@ import net.minecraft.client.gui.components.AbstractSliderButton;
 import net.minecraft.network.chat.Component;
 import net.minecraft.util.Mth;
 
-public abstract class VolumeSlider extends AbstractSliderButton {
+public abstract class EffectVolumeSlider extends AbstractSliderButton {
 
-    public VolumeSlider(int x, int y, int width, int height, float initialVolume) {
+    public EffectVolumeSlider(int x, int y, int width, int height, float initialVolume) {
         super(x, y, width, height, buildMessage(initialVolume), Mth.clamp(initialVolume, 0.0f, 1.0f));
     }
 

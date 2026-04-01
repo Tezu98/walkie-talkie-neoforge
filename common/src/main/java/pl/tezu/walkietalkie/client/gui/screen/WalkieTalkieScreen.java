@@ -4,7 +4,7 @@ import dev.architectury.networking.NetworkManager;
 import pl.tezu.walkietalkie.Constants;
 import pl.tezu.walkietalkie.client.gui.widget.CanalSlider;
 import pl.tezu.walkietalkie.client.gui.widget.ToggleImageButton;
-import pl.tezu.walkietalkie.client.gui.widget.VolumeSlider;
+import pl.tezu.walkietalkie.client.gui.widget.EffectVolumeSlider;
 import pl.tezu.walkietalkie.config.ModConfig;
 import pl.tezu.walkietalkie.item.WalkieTalkieItem;
 import pl.tezu.walkietalkie.network.packet.c2s.walkietalkie.ButtonWalkieTalkieC2SPacket;
@@ -39,7 +39,7 @@ public class WalkieTalkieScreen extends Screen {
     private CanalSlider canalSlider;
     private Button canalAddButton;
     private Button canalRemoveButton;
-    private VolumeSlider volumeSlider;
+    private EffectVolumeSlider effectVolumeSlider;
 
     private static final ResourceLocation BG_TEXTURE = ResourceLocation.fromNamespaceAndPath(Constants.MOD_ID, "textures/gui/gui_walkietalkie.png");
     private static final ResourceLocation MUTE_TEXTURE = ResourceLocation.fromNamespaceAndPath("voicechat", "textures/icons/microphone_button.png");
@@ -74,7 +74,7 @@ public class WalkieTalkieScreen extends Screen {
         canalAddButton = this.addRenderableWidget(Button.builder(Component.literal(">"), button -> sendCanal(canal + 1)).bounds(this.width / 2 - 10 + 80, guiTop + 20, 20, 20).build());
         canalRemoveButton = this.addRenderableWidget(Button.builder(Component.literal("<"), button -> sendCanal(canal - 1)).bounds(this.width / 2 - 10 - 80, guiTop + 20, 20, 20).build());
 
-        volumeSlider = this.addRenderableWidget(new WTVolumeSlider(this.width / 2 - 70, guiTop + 42, 140, 20, ModConfig.soundVolume));
+        effectVolumeSlider = this.addRenderableWidget(new WTEffectEffectVolumeSlider(this.width / 2 - 70, guiTop + 42, 140, 20, ModConfig.effectVolume));
     }
 
     @Override
@@ -126,8 +126,8 @@ public class WalkieTalkieScreen extends Screen {
             this.canalSlider.mouseReleased(mouseX, mouseY, button);
             return true;
         }
-        if (this.volumeSlider.isHoveredOrFocused()) {
-            this.volumeSlider.mouseReleased(mouseX, mouseY, button);
+        if (this.effectVolumeSlider.isHoveredOrFocused()) {
+            this.effectVolumeSlider.mouseReleased(mouseX, mouseY, button);
             return true;
         }
         return this.getChildAt(mouseX, mouseY).filter(element -> element.mouseReleased(mouseX, mouseY, button)).isPresent();
@@ -146,15 +146,15 @@ public class WalkieTalkieScreen extends Screen {
         }
     }
 
-    class WTVolumeSlider extends VolumeSlider {
+    static class WTEffectEffectVolumeSlider extends EffectVolumeSlider {
 
-        public WTVolumeSlider(int x, int y, int width, int height, float initialVolume) {
+        public WTEffectEffectVolumeSlider(int x, int y, int width, int height, float initialVolume) {
             super(x, y, width, height, initialVolume);
         }
 
         @Override
         protected void onVolumeChanged(float volume) {
-            ModConfig.soundVolume = volume;
+            ModConfig.effectVolume = volume;
             ModConfig.save();
         }
     }
