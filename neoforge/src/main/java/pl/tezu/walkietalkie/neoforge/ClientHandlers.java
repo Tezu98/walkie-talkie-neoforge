@@ -6,7 +6,9 @@ import pl.tezu.walkietalkie.network.packet.s2c.UpdateWalkieTalkieS2CPacket;
 import pl.tezu.walkietalkie.screen.ModScreenHandlers;
 import net.neoforged.api.distmarker.Dist;
 import net.neoforged.api.distmarker.OnlyIn;
+import net.neoforged.fml.ModContainer;
 import net.neoforged.neoforge.client.event.RegisterMenuScreensEvent;
+import net.neoforged.neoforge.client.gui.IConfigScreenFactory;
 import net.neoforged.neoforge.network.handling.IPayloadContext;
 
 /**
@@ -18,6 +20,10 @@ public class ClientHandlers {
     private ClientHandlers() {
     }
 
+    public static void registerConfigScreen(ModContainer modContainer) {
+        modContainer.registerExtensionPoint(IConfigScreenFactory.class,
+                net.neoforged.neoforge.client.gui.ConfigurationScreen::new);
+    }
 
     public static void handleUpdateWalkieTalkie(UpdateWalkieTalkieS2CPacket packet, IPayloadContext ctx) {
         ctx.enqueueWork(() -> WalkieTalkieScreen.getInstance().updateButtons(packet.stack()));

@@ -15,6 +15,12 @@ public class ModConfig {
 
     private static ModConfig instance;
 
+    /**
+     * Optional save hook. When set (e.g. by the NeoForge module), calling save()
+     * will delegate to this runnable instead of writing the .properties file.
+     */
+    public static Runnable saveHook = null;
+
     public static int maxCanal = 16;
     public static int speakerDistance = 32;
     public static boolean voiceDuplication = false;
@@ -37,6 +43,10 @@ public class ModConfig {
     }
 
     public static void save() {
+        if (saveHook != null) {
+            saveHook.run();
+            return;
+        }
         if (instance != null) {
             instance.createConfig(mapConfig());
         }
