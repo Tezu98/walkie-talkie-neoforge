@@ -21,7 +21,6 @@ public class WalkieTalkieItem extends Item {
 
     @Override
     public InteractionResultHolder<ItemStack> use(Level level, Player player, InteractionHand hand) {
-
         if (level.isClientSide()) {
             ItemStack stack = player.getItemInHand(hand);
 

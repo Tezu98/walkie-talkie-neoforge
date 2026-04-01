@@ -17,8 +17,26 @@ import java.util.ArrayList;
 import java.util.HashSet;
 import java.util.List;
 import java.util.Set;
+import java.util.function.Function;
 
 public class Util {
+
+    /**
+     * Injected by CuriosLoader.register() when Curios is present.
+     * Kept as a plain Function so Util never references any Curios type.
+     */
+    static Function<Player, List<ItemStack>> curioWalkieTalkieSupplier = null;
+
+    /**
+     * Returns walkie-talkies equipped in the Curios walkie_talkie slot.
+     * Returns an empty list when Curios is absent.
+     */
+    public static List<ItemStack> getCurioWalkieTalkies(Player player) {
+        if (curioWalkieTalkieSupplier != null) {
+            return curioWalkieTalkieSupplier.apply(player);
+        }
+        return List.of();
+    }
 
     public static @Nullable ItemStack getWalkieTalkieInHand(@NotNull Player player) {
 
@@ -64,6 +82,8 @@ public class Util {
             }
 
         }
+
+        itemStacks.addAll(getCurioWalkieTalkies(player));
 
         return itemStacks;
     }
@@ -129,6 +149,10 @@ public class Util {
                 itemStacks.add(stack);
             }
         }
+
+        // Curio slot always counts for listening regardless of requireHotbarForListening
+        itemStacks.addAll(getCurioWalkieTalkies(player));
+
         return itemStacks;
     }
 
