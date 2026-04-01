@@ -12,6 +12,7 @@
 
   "gui.walkietalkie.speaker.title": "Speaker",
   "gui.walkietalkie.title": "Walkie-Talkie",
+  "gui.walkietalkie.volume": "Effect Volume: %s%%",
 
   "advancement.walkietalkie.root.title": "Walkie Talkie",
   "advancement.walkietalkie.root.description": "Discover the power of communication with the walkie-talkie.",
@@ -35,5 +36,6 @@
   "advancement.walkietalkie.netherite_walkietalkie.description": "Obtained a state-of-the-art Netherite walkie-talkie, providing unprecedented communication range.",
 
   "category.walkietalkie.keys": "Walkie-Talkie",
-  "key.walkietalkie.activate": "On/Off"
+  "key.walkietalkie.activate": "On/Off",
+  "key.walkietalkie.push_to_talk": "Push to Talk"
 }

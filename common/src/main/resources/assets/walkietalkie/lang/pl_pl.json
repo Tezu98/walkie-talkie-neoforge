@@ -1,0 +1,41 @@
+{
+  "item.walkietalkie.wooden_walkietalkie": "Drewniane walkie-talkie",
+  "item.walkietalkie.stone_walkietalkie": "Kamienne walkie-talkie",
+  "item.walkietalkie.iron_walkietalkie": "Żelazne walkie-talkie",
+  "item.walkietalkie.golden_walkietalkie": "Złote walkie-talkie",
+  "item.walkietalkie.diamond_walkietalkie": "Diamentowe walkie-talkie",
+  "item.walkietalkie.netherite_walkietalkie": "Walkie-talkie z netheritu",
+
+  "block.walkietalkie.speaker": "Głośnik",
+
+  "itemGroup.walkietalkie.walkietalkie": "Walkie-Talkie",
+
+  "gui.walkietalkie.speaker.title": "Głośnik",
+  "gui.walkietalkie.title": "Walkie-Talkie",
+  "gui.walkietalkie.volume": "Głośność efektów: %s%%",
+
+  "advancement.walkietalkie.root.title": "Walkie-Talkie",
+  "advancement.walkietalkie.root.description": "Odkryj moc komunikacji z walkie-talkie.",
+
+  "advancement.walkietalkie.wooden_walkietalkie.title": "Podstawowa komunikacja",
+  "advancement.walkietalkie.wooden_walkietalkie.description": "Zdobyto drewniane walkie-talkie, umożliwiające komunikację na krótkie odległości.",
+
+  "advancement.walkietalkie.stone_walkietalkie.title": "Ulepszona komunikacja",
+  "advancement.walkietalkie.stone_walkietalkie.description": "Zdobyto kamienne walkie-talkie, umożliwiające komunikację na większe odległości.",
+
+  "advancement.walkietalkie.iron_walkietalkie.title": "Zaawansowana komunikacja",
+  "advancement.walkietalkie.iron_walkietalkie.description": "Zdobyto żelazne walkie-talkie, jeszcze bardziej zwiększające zasięg komunikacji.",
+
+  "advancement.walkietalkie.golden_walkietalkie.title": "Królewska komunikacja",
+  "advancement.walkietalkie.golden_walkietalkie.description": "Zdobyto złote walkie-talkie, aby komunikować się z królami.",
+
+  "advancement.walkietalkie.diamond_walkietalkie.title": "Elitarna komunikacja",
+  "advancement.walkietalkie.diamond_walkietalkie.description": "Zdobyto diamentowe walkie-talkie, umożliwiające bezproblemową komunikację na duże odległości.",
+
+  "advancement.walkietalkie.netherite_walkietalkie.title": "Ostateczna komunikacja",
+  "advancement.walkietalkie.netherite_walkietalkie.description": "Zdobyto nowoczesne walkie-talkie z netheritu, zapewniające bezprecedensowy zasięg komunikacji.",
+
+  "category.walkietalkie.keys": "Walkie-Talkie",
+  "key.walkietalkie.activate": "Włącz/Wyłącz",
+  "key.walkietalkie.push_to_talk": "Naciśnij, aby mówić"
+}
