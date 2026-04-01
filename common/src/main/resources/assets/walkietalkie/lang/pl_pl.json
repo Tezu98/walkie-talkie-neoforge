@@ -13,6 +13,9 @@
   "gui.walkietalkie.speaker.title": "Głośnik",
   "gui.walkietalkie.title": "Walkie-Talkie",
   "gui.walkietalkie.volume": "Głośność efektów: %s%%",
+  "gui.walkietalkie.transmit_from_hand.on": "Ręka: WŁ",
+  "gui.walkietalkie.transmit_from_hand.off": "Ręka: WYŁ",
+  "gui.walkietalkie.transmit_from_hand.tooltip": "Nadawaj, gdy walkie-talkie jest trzymane w ręce",
 
   "advancement.walkietalkie.root.title": "Walkie-Talkie",
   "advancement.walkietalkie.root.description": "Odkryj moc komunikacji z walkie-talkie.",

@@ -13,6 +13,9 @@
   "gui.walkietalkie.speaker.title": "Haut-parleur",
   "gui.walkietalkie.title": "Talkie-Walkie",
   "gui.walkietalkie.volume": "Volume des Effets : %s%%",
+  "gui.walkietalkie.transmit_from_hand.on": "Main : ON",
+  "gui.walkietalkie.transmit_from_hand.off": "Main : OFF",
+  "gui.walkietalkie.transmit_from_hand.tooltip": "Transmettre quand le talkie-walkie est tenu en main",
 
   "advancement.walkietalkie.root.title": "Talkie-Walkie",
   "advancement.walkietalkie.root.description": "Découvrez la puissance de la communication grâce au talkie-walkie.",

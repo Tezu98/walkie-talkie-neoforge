@@ -13,6 +13,9 @@
   "gui.walkietalkie.speaker.title": "Lautsprecher",
   "gui.walkietalkie.title": "Walkie-Talkie",
   "gui.walkietalkie.volume": "Effektlautstärke: %s%%",
+  "gui.walkietalkie.transmit_from_hand.on": "Hand: AN",
+  "gui.walkietalkie.transmit_from_hand.off": "Hand: AUS",
+  "gui.walkietalkie.transmit_from_hand.tooltip": "Senden, wenn das Walkie-Talkie in der Hand gehalten wird",
 
   "advancement.walkietalkie.root.title": "Walkie Talkie",
   "advancement.walkietalkie.root.description": "Entdecken Sie die Macht der Kommunikation mit dem Walkie-Talkie.",
@@ -33,7 +36,7 @@
   "advancement.walkietalkie.diamond_walkietalkie.description": "Erstklassigens Diamant Walkie-Talkies erhalten, das eine nahtlose Kommunikation über große Entfernungen ermöglicht.",
 
   "advancement.walkietalkie.netherite_walkietalkie.title": "Ultimative Kommunikation",
-  "advancement.walkietalkie.netherite_walkietalkie.description": "Hochmodernenes Netherite Walkie-Talkies erhalten, das eine noch nie dagewesene Kommunikationsreichweite bietet."
+  "advancement.walkietalkie.netherite_walkietalkie.description": "Hochmodernenes Netherite Walkie-Talkies erhalten, das eine noch nie dagewesene Kommunikationsreichweite bietet.",
 
   "category.walkietalkie.keys": "Walkie-Talkie",
   "key.walkietalkie.activate": "Ein/Aus"

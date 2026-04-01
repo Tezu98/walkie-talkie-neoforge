@@ -12,6 +12,9 @@
   "gui.walkietalkie.speaker.title": "Акустическая колонка",
   "gui.walkietalkie.title": "Рация",
   "gui.walkietalkie.volume": "Громкость Эффектов: %s%%",
+  "gui.walkietalkie.transmit_from_hand.on": "Рука: ВКЛ",
+  "gui.walkietalkie.transmit_from_hand.off": "Рука: ВЫКЛ",
+  "gui.walkietalkie.transmit_from_hand.tooltip": "Передавать, когда рация в руке",
 
   "advancement.walkietalkie.root.title": "Рация",
   "advancement.walkietalkie.root.description": "Откройте для себя всю мощь общения с помощью рации.",

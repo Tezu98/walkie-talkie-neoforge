@@ -17,6 +17,11 @@ public class ToggleImageButton extends ImageButton{
         this.state = state;
     }
 
+    public ToggleImageButton(int x, int y, ResourceLocation texture, PressAction onPress, boolean state, TooltipSupplier tooltipSupplier) {
+        super(x, y, texture, onPress, tooltipSupplier);
+        this.state = state;
+    }
+
     @Override
     protected void renderImage(GuiGraphics context, int mouseX, int mouseY) {
         RenderSystem.setShader(GameRenderer::getPositionTexShader);

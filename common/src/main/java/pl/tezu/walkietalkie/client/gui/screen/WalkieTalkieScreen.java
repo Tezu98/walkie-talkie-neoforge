@@ -7,6 +7,7 @@ import pl.tezu.walkietalkie.client.gui.widget.ToggleImageButton;
 import pl.tezu.walkietalkie.client.gui.widget.EffectVolumeSlider;
 import pl.tezu.walkietalkie.config.ModConfig;
 import pl.tezu.walkietalkie.item.WalkieTalkieItem;
+import pl.tezu.walkietalkie.network.packet.c2s.TransmitFromHandC2SPacket;
 import pl.tezu.walkietalkie.network.packet.c2s.walkietalkie.ButtonWalkieTalkieC2SPacket;
 import pl.tezu.walkietalkie.network.packet.c2s.walkietalkie.CanalWalkieTalkieC2SPacket;
 import net.minecraft.client.Minecraft;
@@ -35,6 +36,7 @@ public class WalkieTalkieScreen extends Screen {
 
     private ToggleImageButton muteButton;
     private ToggleImageButton activateButton;
+    private ToggleImageButton transmitFromHandButton;
 
     private CanalSlider canalSlider;
     private Button canalAddButton;
@@ -44,6 +46,7 @@ public class WalkieTalkieScreen extends Screen {
     private static final ResourceLocation BG_TEXTURE = ResourceLocation.fromNamespaceAndPath(Constants.MOD_ID, "textures/gui/gui_walkietalkie.png");
     private static final ResourceLocation MUTE_TEXTURE = ResourceLocation.fromNamespaceAndPath("voicechat", "textures/icons/microphone_button.png");
     private static final ResourceLocation ACTIVATE_TEXTURE = ResourceLocation.fromNamespaceAndPath(Constants.MOD_ID, "textures/icons/activate.png");
+    private static final ResourceLocation TRANSMIT_FROM_HAND_TEXTURE = ResourceLocation.fromNamespaceAndPath(Constants.MOD_ID, "textures/icons/hotbar_transmit.png");
 
     public WalkieTalkieScreen(ItemStack stack) {
         super(Component.translatable("gui.walkietalkie.title"));
@@ -55,6 +58,8 @@ public class WalkieTalkieScreen extends Screen {
         canal = WalkieTalkieItem.getCanal(stack);
 
         Minecraft.getInstance().setScreen(this);
+        // Sync the client's saved preference to the server on open
+        NetworkManager.sendToServer(new TransmitFromHandC2SPacket(ModConfig.transmitFromHand));
     }
 
     @Override
@@ -68,6 +73,21 @@ public class WalkieTalkieScreen extends Screen {
 
         activateButton = new ToggleImageButton(guiLeft + 30, guiTop + 82, ACTIVATE_TEXTURE, button -> sendButton(0, !activate), activate);
         this.addRenderableWidget(activateButton);
+
+        transmitFromHandButton = new ToggleImageButton(guiLeft + 54, guiTop + 82, TRANSMIT_FROM_HAND_TEXTURE, button -> toggleTransmitFromHand(), ModConfig.transmitFromHand,
+                (btn, context, font, mouseX, mouseY) -> context.renderTooltip(font, Component.translatable("gui.walkietalkie.transmit_from_hand.tooltip"), mouseX, mouseY)) {
+            @Override
+            protected void renderImage(GuiGraphics context, int mouseX, int mouseY) {
+                com.mojang.blaze3d.systems.RenderSystem.setShader(net.minecraft.client.renderer.GameRenderer::getPositionTexShader);
+                com.mojang.blaze3d.systems.RenderSystem.setShaderColor(1F, 1F, 1F, 1F);
+                if (state) {
+                    context.blit(texture, getX() + 2, getY() + 2, 16, 0, 16, 16, 32, 16);
+                } else {
+                    context.blit(texture, getX() + 2, getY() + 2, 0, 0, 16, 16, 32, 16);
+                }
+            }
+        };
+        this.addRenderableWidget(transmitFromHandButton);
 
         canalSlider = this.addRenderableWidget(new WTCanalSlider(this.width / 2 - 70, guiTop + 20, 140, 20, Component.empty()));
 
@@ -100,6 +120,13 @@ public class WalkieTalkieScreen extends Screen {
 
     private void sendCanal(int canal) {
         NetworkManager.sendToServer(new CanalWalkieTalkieC2SPacket(canal));
+    }
+
+    private void toggleTransmitFromHand() {
+        ModConfig.transmitFromHand = !ModConfig.transmitFromHand;
+        ModConfig.save();
+        NetworkManager.sendToServer(new TransmitFromHandC2SPacket(ModConfig.transmitFromHand));
+        transmitFromHandButton.setState(ModConfig.transmitFromHand);
     }
 
     public void updateButtons(ItemStack stack) {
