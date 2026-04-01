@@ -22,7 +22,7 @@ public class ModConfig {
     public static int goldenWalkieTalkieRange = 1024;
     public static int diamondWalkieTalkieRange = 2048;
     public static int netheriteWalkieTalkieRange = 4096;
-    public static boolean crossDimensionsEnabled = false;
+    public static boolean crossDimensionsEnabled = true;
     public static boolean applyDimensionScale = true;
     public static boolean applyRadioEffect = true;
 
@@ -49,7 +49,7 @@ public class ModConfig {
                 goldenWalkieTalkieRange = Integer.parseInt(properties.getProperty("golden-walkie-talkie-range", "1024"));
                 diamondWalkieTalkieRange = Integer.parseInt(properties.getProperty("diamond-walkie-talkie-range", "2048"));
                 netheriteWalkieTalkieRange = Integer.parseInt(properties.getProperty("netherite-walkie-talkie-range", "4096"));
-                crossDimensionsEnabled = Boolean.parseBoolean(properties.getProperty("cross-dimensions-enabled", "false"));
+                crossDimensionsEnabled = Boolean.parseBoolean(properties.getProperty("cross-dimensions-enabled", "true"));
                 applyDimensionScale = Boolean.parseBoolean(properties.getProperty("apply-dimension-scale", "true"));
                 applyRadioEffect = Boolean.parseBoolean(properties.getProperty("apply-radio-effect", "true"));
 

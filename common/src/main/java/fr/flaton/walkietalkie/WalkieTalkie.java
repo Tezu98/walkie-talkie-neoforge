@@ -1,8 +1,6 @@
 package fr.flaton.walkietalkie;
 
 import dev.architectury.event.events.common.TickEvent;
-import dev.architectury.utils.Env;
-import dev.architectury.utils.EnvExecutor;
 import fr.flaton.walkietalkie.block.ModBlocks;
 import fr.flaton.walkietalkie.block.entity.ModBlockEntities;
 import fr.flaton.walkietalkie.item.ModDataComponents;
@@ -24,9 +22,9 @@ public class WalkieTalkie {
 		ModScreenHandlers.register();
 
 		ModMessages.registerC2SPackets();
+		ModMessages.registerS2CPackets();
 
 		ModSoundEvents.register();
 		TickEvent.SERVER_POST.register(SoundManager::serverTick);
-		EnvExecutor.runInEnv(Env.CLIENT, () -> WalkieTalkieClient::init);
 	}
 }

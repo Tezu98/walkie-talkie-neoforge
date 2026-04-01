@@ -2,6 +2,7 @@ package fr.flaton.walkietalkie.network;
 
 import dev.architectury.networking.NetworkManager;
 import fr.flaton.walkietalkie.network.packet.c2s.*;
+import fr.flaton.walkietalkie.network.packet.c2s.PushToTalkC2SPacket;
 import fr.flaton.walkietalkie.network.packet.c2s.speaker.ButtonSpeakerC2SPacket;
 import fr.flaton.walkietalkie.network.packet.c2s.speaker.CanalSpeakerC2SPacket;
 import fr.flaton.walkietalkie.network.packet.c2s.walkietalkie.ButtonWalkieTalkieC2SPacket;
@@ -19,6 +20,7 @@ public class ModMessages {
         NetworkManager.registerReceiver(NetworkManager.Side.C2S, CanalSpeakerC2SPacket.TYPE, CanalSpeakerC2SPacket.STREAM_CODEC, CanalSpeakerC2SPacket::receive);
 
         NetworkManager.registerReceiver(NetworkManager.Side.C2S, ActivateKeyPressedC2SPacket.TYPE, ActivateKeyPressedC2SPacket.STREAM_CODEC, ActivateKeyPressedC2SPacket::receive);
+        NetworkManager.registerReceiver(NetworkManager.Side.C2S, PushToTalkC2SPacket.TYPE, PushToTalkC2SPacket.STREAM_CODEC, PushToTalkC2SPacket::receive);
     }
 
     public static void registerS2CPackets() {

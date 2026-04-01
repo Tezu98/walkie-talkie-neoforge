@@ -30,7 +30,14 @@ public class SoundManager {
         if (!(senderConnection.getPlayer().getPlayer() instanceof Player senderPlayer))
             return;
 
+        // Resolve which walkie-talkie the sender is using:
+        // Priority 1: item in hand (original behaviour)
+        // Priority 2: best-range activated walkie-talkie anywhere in inventory, when PTT is held
         ItemStack senderWalkie = Util.getWalkieTalkieInHand(senderPlayer);
+
+        if (senderWalkie == null && PushToTalkManager.isPressed(senderPlayer.getUUID())) {
+            senderWalkie = Util.getWalkieTalkieActivated(senderPlayer);
+        }
 
         if (senderWalkie == null)
             return;

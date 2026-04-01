@@ -35,5 +35,6 @@
   "advancement.walkietalkie.netherite_walkietalkie.description": "Obtained a state-of-the-art Netherite walkie-talkie, providing unprecedented communication range.",
 
   "category.walkietalkie.keys": "Walkie-Talkie",
-  "key.walkietalkie.activate": "On/Off"
+  "key.walkietalkie.activate": "On/Off",
+  "key.walkietalkie.push_to_talk": "Push to Talk"
 }

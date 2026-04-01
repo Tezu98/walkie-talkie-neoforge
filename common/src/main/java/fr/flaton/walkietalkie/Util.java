@@ -51,10 +51,7 @@ public class Util {
         List<ItemStack> itemStacks = new ArrayList<>();
 
         Inventory playerInventory = player.getInventory();
-        List<ItemStack> inventory = new ArrayList<>();
-        for (int i = 0; i < 9; i++) {
-            inventory.add(playerInventory.items.get(i));
-        }
+        List<ItemStack> inventory = new ArrayList<>(playerInventory.items); // all 36 slots
         inventory.addAll(playerInventory.offhand);
 
         for (ItemStack stack : inventory) {
