@@ -8,22 +8,13 @@ architectury {
     neoForge()
 }
 
+
 configurations {
     common
     shadowCommon // Don't use shadow from the shadow plugin because we don't want IDEA to index this.
     compileClasspath.extendsFrom common
     runtimeClasspath.extendsFrom common
     developmentNeoForge.extendsFrom common
-
-    all {
-        resolutionStrategy {
-            force 'org.ow2.asm:asm:9.7'
-            force 'org.ow2.asm:asm-commons:9.7'
-            force 'org.ow2.asm:asm-tree:9.7'
-            force 'org.ow2.asm:asm-util:9.7'
-            force 'org.ow2.asm:asm-analysis:9.7'
-        }
-    }
 }
 
 dependencies {
@@ -41,6 +32,12 @@ dependencies {
 
     // SimpleVoiceChat dependencies
     modRuntimeOnly "maven.modrinth:simple-voice-chat:neoforge-${voicechat_version}"
+
+    // Provide Create + related full jars into the dev environment so they are installed when running the game
+    modLocalRuntime("com.simibubi.create:create-${rootProject.minecraft_version}:${rootProject.create_version}") { transitive = false }
+    modLocalRuntime("net.createmod.ponder:ponder-neoforge:${rootProject.ponder_version}+mc${rootProject.minecraft_version}")
+    modLocalRuntime("dev.engine-room.flywheel:flywheel-neoforge-${rootProject.minecraft_version}:${rootProject.flywheel_version}")
+    modLocalRuntime("com.tterrag.registrate:Registrate:${rootProject.registrate_version}")
 }
 
 shadowJar {

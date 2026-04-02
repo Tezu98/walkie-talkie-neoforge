@@ -84,6 +84,9 @@ allprojects {
             url = "https://maven.theillusivec4.top/"
         }
 
+        maven { url = "https://maven.createmod.net" } // Create, Ponder, Flywheel
+        maven { url = "https://maven.ithundxr.dev/snapshots" } // Registrate
+
         exclusiveContent {
             forRepository {
                 maven {
@@ -96,6 +99,7 @@ allprojects {
             }
         }
     }
+
 
     tasks.withType(JavaCompile) {
         options.encoding = "UTF-8"
