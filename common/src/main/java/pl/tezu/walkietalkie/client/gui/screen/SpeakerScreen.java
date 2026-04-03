@@ -1,10 +1,10 @@
 package pl.tezu.walkietalkie.client.gui.screen;
 
-import dev.architectury.networking.NetworkManager;
 import pl.tezu.walkietalkie.Constants;
 import pl.tezu.walkietalkie.client.gui.widget.CanalSlider;
 import pl.tezu.walkietalkie.client.gui.widget.ToggleImageButton;
 import pl.tezu.walkietalkie.config.ModConfig;
+import pl.tezu.walkietalkie.network.ModMessages;
 import pl.tezu.walkietalkie.network.packet.c2s.speaker.ButtonSpeakerC2SPacket;
 import pl.tezu.walkietalkie.network.packet.c2s.speaker.CanalSpeakerC2SPacket;
 import pl.tezu.walkietalkie.screen.SpeakerScreenHandler;
@@ -81,11 +81,11 @@ public class SpeakerScreen extends AbstractContainerScreen<SpeakerScreenHandler>
     }
 
     private void sendButton(boolean activate) {
-        NetworkManager.sendToServer(new ButtonSpeakerC2SPacket(activate));
+        ModMessages.sendToServer(new ButtonSpeakerC2SPacket(activate));
     }
 
     private void sendCanal(int canal) {
-        NetworkManager.sendToServer(new CanalSpeakerC2SPacket(canal));
+        ModMessages.sendToServer(new CanalSpeakerC2SPacket(canal));
     }
 
     @Override

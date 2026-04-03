@@ -16,12 +16,19 @@ import net.minecraft.world.phys.Vec3;
 import org.jetbrains.annotations.Nullable;
 
 import java.util.*;
+import java.util.function.BiConsumer;
 
 import static pl.tezu.walkietalkie.WalkieTalkieVoiceChatPlugin.voiceChatAPI;
 
 public class Member {
 
     private final static Map<UUID, Member> MEMBERS = new HashMap<>();
+
+    /**
+     * Platform-specific hook for injecting contraption-borne speakers (e.g. Create integration).
+     * Set by the NeoForge module on startup when Create is present; {@code null} otherwise.
+     */
+    public static BiConsumer<MinecraftServer, List<Member>> createIntegrationHook = null;
 
     private final UUID uuid;
     private Vec3 pos;
@@ -50,6 +57,13 @@ public class Member {
                 members.add(member);
         }
 
+        // Create mod integration: also track speakers that are inside a moving contraption.
+        // Those speakers never appear in SpeakerBlockEntity.SPEAKERS because Create stores
+        // their block entities as raw NBT (no live Java object is constructed).
+        if (createIntegrationHook != null) {
+            createIntegrationHook.accept(server, members);
+        }
+
         for (Member member : new HashSet<>(MEMBERS.values())) {
             if (!members.contains(member)) {
                 for (Canal canal : member.canals) {
@@ -68,6 +82,15 @@ public class Member {
 
     public static Member get(UUID uuid) {
         return MEMBERS.get(uuid);
+    }
+
+    /**
+     * Creates or updates a {@link Member} for an entity that is not a player and not a
+     * placed {@link pl.tezu.walkietalkie.block.entity.SpeakerBlockEntity} — used by the
+     * Create contraption integration to inject contraption-borne speakers.
+     */
+    public static @Nullable Member getOrCreate(UUID uuid, Vec3 pos, Level level, Set<Canal> canals) {
+        return get(uuid, pos, level, canals);
     }
 
     private static @Nullable Member get(UUID uuid, Vec3 pos, Level level, Set<Canal> canals) {
