@@ -4,6 +4,7 @@ import de.maxhenkel.voicechat.api.VoicechatConnection;
 import de.maxhenkel.voicechat.api.audiochannel.AudioChannel;
 import de.maxhenkel.voicechat.api.audiochannel.AudioPlayer;
 import de.maxhenkel.voicechat.api.audiochannel.LocationalAudioChannel;
+import de.maxhenkel.voicechat.api.audiochannel.StaticAudioChannel;
 import de.maxhenkel.voicechat.api.opus.OpusDecoder;
 import de.maxhenkel.voicechat.api.packets.MicrophonePacket;
 import pl.tezu.walkietalkie.Util;
@@ -40,8 +41,13 @@ public class Member {
     /** One Opus decoder per sending-player UUID, so interleaved streams are decoded independently. */
     private final Map<UUID, OpusDecoder> decoders = new HashMap<>();
     private final List<short[]> packetBuffer = new ArrayList<>();
-    private AudioPlayer audioPlayer;
-    private AudioChannel audioChannel;
+    /**
+     * Guarded by {@link #audioLock} for creation; volatile so the null-write in
+     * {@link #getAudio()} is immediately visible to other threads without a lock.
+     */
+    private volatile AudioPlayer audioPlayer;
+    private volatile AudioChannel audioChannel;
+    private final Object audioLock = new Object();
 
     public static void serverTick(MinecraftServer server) {
         List<ServerPlayer> playerList = server.getPlayerList().getPlayers();
@@ -49,12 +55,12 @@ public class Member {
 
         for (ServerPlayer player : playerList) {
             Member member = Member.get(player.getUUID(), player.position(), player.level(), Util.getCanals(player));
-            if (member !=null)
+            if (member != null)
                 members.add(member);
         }
         for (SpeakerBlockEntity speaker : SpeakerBlockEntity.getActiveSpeakers()) {
             Member member = Member.get(speaker.getUuid(), speaker.getBlockPos().getCenter(), speaker.getLevel(), speaker.getCanal());
-            if (member !=null)
+            if (member != null)
                 members.add(member);
         }
 
@@ -151,7 +157,7 @@ public class Member {
         }
 
         // Store a local reference to avoid a race where the audio callback nulls
-        // audioPlayer between the null-check and the startPlaying() call (NPE line 148).
+        // audioPlayer between the null-check and the startPlaying() call.
         AudioPlayer player = getAudioPlayer();
         if (player != null) {
             player.startPlaying();
@@ -159,12 +165,20 @@ public class Member {
     }
 
     private AudioPlayer getAudioPlayer() {
-        if (audioPlayer == null) {
+        // Fast path – already created.
+        if (audioPlayer != null) return audioPlayer;
+
+        synchronized (audioLock) {
+            // Double-checked: another thread may have created it while we waited.
+            if (audioPlayer != null) return audioPlayer;
+
             // Use a fresh UUID for every new channel so the API never sees the same ID
             // reused while a previous channel may still be in flight after stopPlaying().
             UUID channelId = UUID.randomUUID();
             VoicechatConnection connection = voiceChatAPI.getConnectionOf(uuid);
-            if (connection == null) { // Speaker
+
+            if (connection == null) {
+                // ── Speaker ──────────────────────────────────────────────────────────
                 LocationalAudioChannel locationalAudioChannel = voiceChatAPI.createLocationalAudioChannel(channelId,
                         voiceChatAPI.fromServerLevel(level),
                         voiceChatAPI.createPosition(pos.x, pos.y, pos.z));
@@ -172,15 +186,26 @@ public class Member {
                 locationalAudioChannel.setDistance(ModConfig.speakerDistance);
                 audioChannel = locationalAudioChannel;
                 audioChannel.setCategory("speakers");
-            } else { // Player
-                audioChannel = voiceChatAPI.createEntityAudioChannel(channelId, connection.getPlayer());
-                if (audioChannel == null) return null;
+            } else {
+                // ── Player ───────────────────────────────────────────────────────────
+                // Use StaticAudioChannel instead of EntityAudioChannel.
+                // EntityAudioChannel internally loads EntityAudioChannelImpl, which
+                // triggers the Railways EntityAudioChannelImplMixin.  That mixin has a
+                // type-signature bug (handler declares Object, target expects Entity)
+                // that raises a fatal MixinTransformerError and crashes the game.
+                // StaticAudioChannel uses StaticAudioChannelImpl — a completely
+                // different class that is not targeted by any Railways mixin.
+                StaticAudioChannel staticAudioChannel = voiceChatAPI.createStaticAudioChannel(channelId);
+                if (staticAudioChannel == null) return null;
+                staticAudioChannel.addTarget(connection);
+                audioChannel = staticAudioChannel;
             }
 
+            // Volatile write – makes the new player visible to all threads without
+            // requiring them to enter the synchronized block.
             audioPlayer = voiceChatAPI.createAudioPlayer(audioChannel, voiceChatAPI.createEncoder(), this::getAudio);
+            return audioPlayer;
         }
-
-        return audioPlayer;
     }
 
     private short[] getAudio() {
@@ -200,7 +225,7 @@ public class Member {
         short max = 0;
         for (short num : audio) {
             if (num > max) {
-                max = num; // Mise à jour du maximum
+                max = num;
             }
         }
         return max;

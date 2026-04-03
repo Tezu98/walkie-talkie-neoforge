@@ -1,1 +1,3 @@
++ Fixed compatibility with Steam 'n' Rails: EntityAudioChannelImpl is now pre-initialised on the server main thread so that mixin transformers (including Railways' EntityAudioChannelImplMixin) are applied there instead of on WalkieTalkieAudioThread, preventing a FATAL mixin-injection error that broke audio processing
++ Fixed a thread-safety race in audio-player creation: audioPlayer/audioChannel are now volatile and creation is guarded by double-checked locking, eliminating the possibility of multiple players transmitting simultaneously each creating a redundant channel
 + Fixed issue when multiple players tried to use the walkie-talkie at the same time, causing desync and other issues
