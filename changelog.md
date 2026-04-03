@@ -1,6 +1,1 @@
-+ Support for 1.21.1 NeoForged
-+ Create integration for the speaker block
-+ Curios integration for the walkie-talkie
-+ Option to enable/disable the walkie-talkie when the item is held
-+ Option to enable/disable need of having the item in the hotbar
-+ Push-to-talk
++ Fixed issue when multiple players tried to use the walkie-talkie at the same time, causing desync and other issues

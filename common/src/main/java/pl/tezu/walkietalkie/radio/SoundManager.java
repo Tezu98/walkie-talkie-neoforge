@@ -61,7 +61,7 @@ public class SoundManager {
 
         for (Member member : listeners) {
             if (member != source) {
-                member.sendAudio(event.getPacket());
+                member.sendAudio(senderPlayer.getUUID(), event.getPacket());
             }
         }
     }

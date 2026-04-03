@@ -37,7 +37,8 @@ public class Member {
 
     private short volume = 0;
 
-    private final OpusDecoder decoder;
+    /** One Opus decoder per sending-player UUID, so interleaved streams are decoded independently. */
+    private final Map<UUID, OpusDecoder> decoders = new HashMap<>();
     private final List<short[]> packetBuffer = new ArrayList<>();
     private AudioPlayer audioPlayer;
     private AudioChannel audioChannel;
@@ -73,9 +74,10 @@ public class Member {
                 if (member.audioPlayer != null) {
                     member.audioPlayer.stopPlaying();
                 }
-                if (member.decoder != null) {
-                    member.decoder.close();
+                for (OpusDecoder d : member.decoders.values()) {
+                    d.close();
                 }
+                member.decoders.clear();
             }
         }
     }
@@ -102,7 +104,6 @@ public class Member {
 
     private Member(UUID uuid) {
         this.uuid = uuid;
-        this.decoder = voiceChatAPI.createDecoder();
     }
 
     private void update(Vec3 pos, Level level, Set<Canal> canals) {
@@ -140,27 +141,40 @@ public class Member {
         return canals;
     }
 
-    public void sendAudio(MicrophonePacket packet) {
+    public void sendAudio(UUID senderUuid, MicrophonePacket packet) {
+        // Each sender gets its own Opus decoder so interleaved streams stay independent.
+        OpusDecoder senderDecoder = decoders.computeIfAbsent(senderUuid, id -> voiceChatAPI.createDecoder());
         byte[] data = packet.getOpusEncodedData();
-        short[] decoded = decoder.decode(data);
-        packetBuffer.add(decoded);
+        short[] decoded = senderDecoder.decode(data);
+        synchronized (packetBuffer) {
+            packetBuffer.add(decoded);
+        }
 
-        if (getAudioPlayer() != null)
-            audioPlayer.startPlaying();
+        // Store a local reference to avoid a race where the audio callback nulls
+        // audioPlayer between the null-check and the startPlaying() call (NPE line 148).
+        AudioPlayer player = getAudioPlayer();
+        if (player != null) {
+            player.startPlaying();
+        }
     }
 
     private AudioPlayer getAudioPlayer() {
         if (audioPlayer == null) {
+            // Use a fresh UUID for every new channel so the API never sees the same ID
+            // reused while a previous channel may still be in flight after stopPlaying().
+            UUID channelId = UUID.randomUUID();
             VoicechatConnection connection = voiceChatAPI.getConnectionOf(uuid);
             if (connection == null) { // Speaker
-                LocationalAudioChannel locationalAudioChannel = voiceChatAPI.createLocationalAudioChannel(uuid,
+                LocationalAudioChannel locationalAudioChannel = voiceChatAPI.createLocationalAudioChannel(channelId,
                         voiceChatAPI.fromServerLevel(level),
                         voiceChatAPI.createPosition(pos.x, pos.y, pos.z));
+                if (locationalAudioChannel == null) return null;
                 locationalAudioChannel.setDistance(ModConfig.speakerDistance);
                 audioChannel = locationalAudioChannel;
                 audioChannel.setCategory("speakers");
             } else { // Player
-                audioChannel = voiceChatAPI.createEntityAudioChannel(uuid, connection.getPlayer());
+                audioChannel = voiceChatAPI.createEntityAudioChannel(channelId, connection.getPlayer());
+                if (audioChannel == null) return null;
             }
 
             audioPlayer = voiceChatAPI.createAudioPlayer(audioChannel, voiceChatAPI.createEncoder(), this::getAudio);
@@ -173,8 +187,9 @@ public class Member {
         short[] audio = getCombinedAudio();
         if (audio == null) {
             volume = 0;
-            audioPlayer.stopPlaying();
+            AudioPlayer player = audioPlayer;
             audioPlayer = null;
+            if (player != null) player.stopPlaying();
             return null;
         }
         volume = getVolume(audio);
@@ -192,26 +207,23 @@ public class Member {
     }
 
     public short[] getCombinedAudio() {
-        if (packetBuffer.isEmpty()) {
-            return null;
+        List<short[]> snapshot;
+        synchronized (packetBuffer) {
+            if (packetBuffer.isEmpty()) {
+                return null;
+            }
+            snapshot = new ArrayList<>(packetBuffer);
+            packetBuffer.clear();
         }
 
         short[] result = new short[960];
-        int sample;
         for (int i = 0; i < result.length; i++) {
-            sample = 0;
-            for (short[] audio : new HashSet<>(packetBuffer)) {
+            int sample = 0;
+            for (short[] audio : snapshot) {
                 sample += audio[i];
             }
-            if (sample > Short.MAX_VALUE) {
-                result[i] = Short.MAX_VALUE;
-            } else if (sample < Short.MIN_VALUE) {
-                result[i] = Short.MIN_VALUE;
-            } else {
-                result[i] = (short) sample;
-            }
+            result[i] = (short) Math.max(Short.MIN_VALUE, Math.min(Short.MAX_VALUE, sample));
         }
-        packetBuffer.clear();
         return result;
     }
 
