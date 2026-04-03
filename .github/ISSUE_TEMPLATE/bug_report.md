@@ -27,13 +27,13 @@ If applicable, add screenshots to help explain your problem.
 If necessary, add logs to explain your problem.
 
 **Client (please complete the following information):**
- - OS: [e.g. iOS]
+ - OS: [e.g. MacOS]
  - Simple Voice Chat Version [e.g. 2.4.24]
  - Minecraft Version [e.g. 1.20.2]
  - Mod Version [e.g. 1.2.2]
 
 **Server (please complete the following information, if you own the server):**
- - OS: [e.g. iOS]
+ - OS: [e.g. Linux]
  - Simple Voice Chat Version [e.g. 2.4.24]
  - Minecraft Version [e.g. 1.20.2]
  - Mod Version [e.g. 1.2.2]
