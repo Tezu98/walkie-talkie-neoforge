@@ -38,6 +38,12 @@ dependencies {
     modLocalRuntime("net.createmod.ponder:ponder-neoforge:${rootProject.ponder_version}+mc${rootProject.minecraft_version}")
     modLocalRuntime("dev.engine-room.flywheel:flywheel-neoforge-${rootProject.minecraft_version}:${rootProject.flywheel_version}")
     modLocalRuntime("com.tterrag.registrate:Registrate:${rootProject.registrate_version}")
+
+    // Create + related libraries (compile-only) for CreateContraptionIntegration
+    modCompileOnly("com.simibubi.create:create-${rootProject.minecraft_version}:${rootProject.create_version}:slim") { transitive = false }
+    modCompileOnly("net.createmod.ponder:ponder-neoforge:${rootProject.ponder_version}+mc${rootProject.minecraft_version}")
+    modCompileOnly("dev.engine-room.flywheel:flywheel-neoforge-api-${rootProject.minecraft_version}:${rootProject.flywheel_version}")
+    modCompileOnly("com.tterrag.registrate:Registrate:${rootProject.registrate_version}")
 }
 
 shadowJar {

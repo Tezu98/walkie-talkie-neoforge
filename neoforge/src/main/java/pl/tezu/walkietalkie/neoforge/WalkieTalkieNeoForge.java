@@ -5,6 +5,7 @@ import pl.tezu.walkietalkie.CuriosLoader;
 import pl.tezu.walkietalkie.WalkieTalkie;
 import pl.tezu.walkietalkie.WalkieTalkieClient;
 import pl.tezu.walkietalkie.network.ModMessages;
+import pl.tezu.walkietalkie.radio.Member;
 import pl.tezu.walkietalkie.network.packet.c2s.ActivateKeyPressedC2SPacket;
 import pl.tezu.walkietalkie.network.packet.c2s.PushToTalkC2SPacket;
 import pl.tezu.walkietalkie.network.packet.c2s.TransmitFromHandC2SPacket;
@@ -74,6 +75,9 @@ public class WalkieTalkieNeoForge {
     private void commonSetup(FMLCommonSetupEvent event) {
         if (ModList.get().isLoaded("curios")) {
             CuriosLoader.register();
+        }
+        if (ModList.get().isLoaded("create")) {
+            Member.createIntegrationHook = CreateContraptionIntegration::addContraptionSpeakers;
         }
     }
 

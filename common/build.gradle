@@ -2,12 +2,6 @@ dependencies {
     modApi "dev.architectury:architectury:${rootProject.architectury_version}"
 
     modCompileOnly "top.theillusivec4.curios:curios-neoforge:${curios_version}:api"
-
-    // Create + related libraries (compile-only for common module)
-    modCompileOnly("com.simibubi.create:create-${rootProject.minecraft_version}:${rootProject.create_version}:slim") { transitive = false }
-    modCompileOnly("net.createmod.ponder:ponder-neoforge:${rootProject.ponder_version}+mc${rootProject.minecraft_version}")
-    modCompileOnly("dev.engine-room.flywheel:flywheel-neoforge-api-${rootProject.minecraft_version}:${rootProject.flywheel_version}")
-    modCompileOnly("com.tterrag.registrate:Registrate:${rootProject.registrate_version}")
 }
 
 architectury {
