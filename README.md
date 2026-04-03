@@ -1,5 +1,5 @@
 # Minecraft Walkie-Talkie Mod
-![image](https://raw.githubusercontent.com/Flaton1/walkie-talkie-mod/1.20.4/gallery/walkie_talkie_large.png)
+![image](https://raw.githubusercontent.com/Tezu98/walkie-talkie-neoforge/refs/heads/master/gallery/walkie_talkie_large.png)
 <!-- prettier-ignore-start -->
 
 > **Warning**
@@ -81,7 +81,7 @@ Replace Planks with Diamond
 <details>
   <summary>Speaker</summary>
 
-![image](https://raw.githubusercontent.com/Flaton1/walkie-talkie-mod/1.20.4/gallery/walkie_talkie_craft_speaker.png)
+![image](https://raw.githubusercontent.com/Tezu98/walkie-talkie-neoforge/refs/heads/master/gallery/walkie_talkie_craft_speaker.png)
 </details>
 
 ## Config
@@ -108,4 +108,4 @@ Replace Planks with Diamond
 + [Simple Voice Chat](https://github.com/henkelmax/simple-voice-chat)
 + [Architectury API](https://github.com/architectury/architectury-api)
 
-[LICENSE](https://raw.githubusercontent.com/Flaton1/walkie-talkie-mod/1.20.4/LICENSE)
+[LICENSE](https://raw.githubusercontent.com/Tezu98/walkie-talkie-neoforge/refs/heads/master/LICENSE)
