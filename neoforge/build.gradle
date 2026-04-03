@@ -87,7 +87,7 @@ components.java {
 curseforge {
     apiKey = file("${rootDir}/curseforge_api_key.txt").exists() ? file("${rootDir}/curseforge_api_key.txt").text : ''
     project {
-        id = "825621"
+        id = "1503266"
         changelogType = 'markdown'
         changelog = file("${rootDir}/changelog.md")
         releaseType = release_type
@@ -113,7 +113,7 @@ tasks.modrinth.configure({
 
 modrinth {
     token = file("${rootDir}/modrinth_token.txt").exists() ? file("${rootDir}/modrinth_token.txt").text : ''
-    projectId = "yaRitiLw"
+    projectId = "4uK2aTGb"
     versionNumber = "forge-${version}"
     if (minecraft_version == min_minecraft_version) {
         versionName = "[FORGE][${minecraft_version}] Walkie-Talkie ${version}"
