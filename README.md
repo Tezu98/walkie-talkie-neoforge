@@ -51,7 +51,7 @@ This mod adds two-way radios with different upgrades.
 <details>
   <summary>Wooden Walkie-Talkie</summary>
 
-  ![image](https://raw.githubusercontent.com/Flaton1/walkie-talkie-mod/1.20.4/gallery/walkie_talkie_craft_wood.png)
+  ![image](https://raw.githubusercontent.com/Tezu98/walkie-talkie-neoforge/refs/heads/master/gallery/walkie_talkie_craft.png)
 </details>
 <details>
   <summary>Stone Walkie-Talkie</summary>
@@ -76,7 +76,7 @@ Replace Planks with Diamond
 <details>
   <summary>Netherite Walkie-Talkie</summary>
 
-![image](https://raw.githubusercontent.com/Flaton1/walkie-talkie-mod/1.20.4/gallery/walkie_talkie_craft_netherite.png)
+![image](https://raw.githubusercontent.com/Tezu98/walkie-talkie-neoforge/refs/heads/master/gallery/walkie_talkie_craft_netherite.png)
 </details>
 <details>
   <summary>Speaker</summary>
