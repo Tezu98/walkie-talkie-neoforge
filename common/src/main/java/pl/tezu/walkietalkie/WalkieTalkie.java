@@ -21,7 +21,6 @@ public class WalkieTalkie {
 		ModBlockEntities.register();
 		ModScreenHandlers.register();
 
-		ModMessages.registerC2SPackets();
 		ModMessages.registerS2CPackets();
 
 		ModSoundEvents.register();

@@ -1,12 +1,12 @@
 package pl.tezu.walkietalkie.client.gui.screen;
 
-import dev.architectury.networking.NetworkManager;
 import pl.tezu.walkietalkie.Constants;
 import pl.tezu.walkietalkie.client.gui.widget.CanalSlider;
 import pl.tezu.walkietalkie.client.gui.widget.ToggleImageButton;
 import pl.tezu.walkietalkie.client.gui.widget.EffectVolumeSlider;
 import pl.tezu.walkietalkie.config.ModConfig;
 import pl.tezu.walkietalkie.item.WalkieTalkieItem;
+import pl.tezu.walkietalkie.network.ModMessages;
 import pl.tezu.walkietalkie.network.packet.c2s.TransmitFromHandC2SPacket;
 import pl.tezu.walkietalkie.network.packet.c2s.walkietalkie.ButtonWalkieTalkieC2SPacket;
 import pl.tezu.walkietalkie.network.packet.c2s.walkietalkie.CanalWalkieTalkieC2SPacket;
@@ -59,7 +59,7 @@ public class WalkieTalkieScreen extends Screen {
 
         Minecraft.getInstance().setScreen(this);
         // Sync the client's saved preference to the server on open
-        NetworkManager.sendToServer(new TransmitFromHandC2SPacket(ModConfig.transmitFromHand));
+        ModMessages.sendToServer(new TransmitFromHandC2SPacket(ModConfig.transmitFromHand));
     }
 
     @Override
@@ -115,17 +115,17 @@ public class WalkieTalkieScreen extends Screen {
     }
 
     private void sendButton(int index, boolean activate) {
-        NetworkManager.sendToServer(new ButtonWalkieTalkieC2SPacket(index, activate));
+        ModMessages.sendToServer(new ButtonWalkieTalkieC2SPacket(index, activate));
     }
 
     private void sendCanal(int canal) {
-        NetworkManager.sendToServer(new CanalWalkieTalkieC2SPacket(canal));
+        ModMessages.sendToServer(new CanalWalkieTalkieC2SPacket(canal));
     }
 
     private void toggleTransmitFromHand() {
         ModConfig.transmitFromHand = !ModConfig.transmitFromHand;
         ModConfig.save();
-        NetworkManager.sendToServer(new TransmitFromHandC2SPacket(ModConfig.transmitFromHand));
+        ModMessages.sendToServer(new TransmitFromHandC2SPacket(ModConfig.transmitFromHand));
         transmitFromHandButton.setState(ModConfig.transmitFromHand);
     }
 

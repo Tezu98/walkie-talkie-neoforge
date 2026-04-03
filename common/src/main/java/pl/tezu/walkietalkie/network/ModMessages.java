@@ -1,28 +1,34 @@
 package pl.tezu.walkietalkie.network;
 
 import dev.architectury.networking.NetworkManager;
-import pl.tezu.walkietalkie.network.packet.c2s.ActivateKeyPressedC2SPacket;
-import pl.tezu.walkietalkie.network.packet.c2s.PushToTalkC2SPacket;
-import pl.tezu.walkietalkie.network.packet.c2s.TransmitFromHandC2SPacket;
-import pl.tezu.walkietalkie.network.packet.c2s.speaker.ButtonSpeakerC2SPacket;
-import pl.tezu.walkietalkie.network.packet.c2s.speaker.CanalSpeakerC2SPacket;
-import pl.tezu.walkietalkie.network.packet.c2s.walkietalkie.ButtonWalkieTalkieC2SPacket;
-import pl.tezu.walkietalkie.network.packet.c2s.walkietalkie.CanalWalkieTalkieC2SPacket;
+import net.minecraft.network.protocol.common.custom.CustomPacketPayload;
 import pl.tezu.walkietalkie.network.packet.s2c.UpdateWalkieTalkieS2CPacket;
+
+import java.util.function.Consumer;
 
 public class ModMessages {
 
-    public static void registerC2SPackets() {
+    /**
+     * Platform-specific hook for sending C2S packets.
+     * On NeoForge this is set to {@code PacketDistributor::sendToServer} by
+     * {@code WalkieTalkieNeoForge} (client-side only) so that packets bypass
+     * Architectury's {@code NetworkAggregator} and use NeoForge's native send
+     * path, which respects the {@code optional()} flag registered via
+     * {@code RegisterPayloadHandlersEvent} and therefore passes
+     * {@code NetworkRegistry.checkPacket} even when Sinytra Connector is present.
+     *
+     * <p>Default is {@code null} — must NOT use {@code NetworkManager::sendToServer}
+     * here because that method is {@code @OnlyIn(Dist.CLIENT)} and would be stripped
+     * by NeoForge's {@code runtimedistcleaner} on the server, causing a
+     * {@code NoSuchMethodError} when the class is loaded during server startup.
+     */
+    public static Consumer<CustomPacketPayload> c2sSender = null;
 
-        NetworkManager.registerReceiver(NetworkManager.Side.C2S, ButtonWalkieTalkieC2SPacket.TYPE, ButtonWalkieTalkieC2SPacket.STREAM_CODEC, ButtonWalkieTalkieC2SPacket::receive);
-        NetworkManager.registerReceiver(NetworkManager.Side.C2S, CanalWalkieTalkieC2SPacket.TYPE, CanalWalkieTalkieC2SPacket.STREAM_CODEC, CanalWalkieTalkieC2SPacket::receive);
-
-        NetworkManager.registerReceiver(NetworkManager.Side.C2S, ButtonSpeakerC2SPacket.TYPE, ButtonSpeakerC2SPacket.STREAM_CODEC, ButtonSpeakerC2SPacket::receive);
-        NetworkManager.registerReceiver(NetworkManager.Side.C2S, CanalSpeakerC2SPacket.TYPE, CanalSpeakerC2SPacket.STREAM_CODEC, CanalSpeakerC2SPacket::receive);
-
-        NetworkManager.registerReceiver(NetworkManager.Side.C2S, ActivateKeyPressedC2SPacket.TYPE, ActivateKeyPressedC2SPacket.STREAM_CODEC, ActivateKeyPressedC2SPacket::receive);
-        NetworkManager.registerReceiver(NetworkManager.Side.C2S, PushToTalkC2SPacket.TYPE, PushToTalkC2SPacket.STREAM_CODEC, PushToTalkC2SPacket::receive);
-        NetworkManager.registerReceiver(NetworkManager.Side.C2S, TransmitFromHandC2SPacket.TYPE, TransmitFromHandC2SPacket.STREAM_CODEC, TransmitFromHandC2SPacket::receive);
+    /**
+     * Send a C2S packet using the platform-appropriate sender.
+     */
+    public static void sendToServer(CustomPacketPayload payload) {
+        c2sSender.accept(payload);
     }
 
     public static void registerS2CPackets() {
