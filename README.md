@@ -22,8 +22,8 @@ This mod adds two-way radios with different upgrades.
 ### Walkie-Talkie:
 + Right-click to open the Walkie-Talkie menu
 + Turn on the walkie-talkie (**B** by default)
-+ You can configure if you want to transmit your voice when the walkie-talkie is on or only when you hold the keybind to talk (default: Left Alt)
-+ To listen, **make sure the walkie-talkie is in your hotbar**
++ Push-to-talk: Hold the keybind (default: **None**) and talk
++ Configure if you want to talk when the item is held
 ### Speaker:
 + Right-click on the speaker to open menu
 + Turn on the speaker
@@ -37,6 +37,8 @@ This mod adds two-way radios with different upgrades.
 + Volume category for speakers
 + Keybind to activate/deactivate the walkie-talkie
 + Speaker emit redstone
++ [Curios](https://www.curseforge.com/minecraft/mc-mods/curios] support) support
++ [Create](https://www.curseforge.com/minecraft/mc-mods/create) Speaker block integration
 ## Upgrades
 + Wood: 128 block distance
 + Stone: 256 block distance
@@ -45,7 +47,7 @@ This mod adds two-way radios with different upgrades.
 + Diamond: 2048 block distance
 + Netherite: 4096 block distance
 ## Crafts:
-***Notes: Any type of wood and wool is allowed. 1.16.5 replaced lightning rod with iron bars***
+***Notes: Any type of wood and wool is allowed.***
 <details>
   <summary>Wooden Walkie-Talkie</summary>
 
@@ -54,22 +56,22 @@ This mod adds two-way radios with different upgrades.
 <details>
   <summary>Stone Walkie-Talkie</summary>
 
-![image](https://raw.githubusercontent.com/Flaton1/walkie-talkie-mod/1.20.4/gallery/walkie_talkie_craft_stone.png)
+Replace Planks with Stone
 </details>
 <details>
   <summary>Iron Walkie-Talkie</summary>
 
-![image](https://raw.githubusercontent.com/Flaton1/walkie-talkie-mod/1.20.4/gallery/walkie_talkie_craft_iron.png)
+Replace Planks with Iron ingot
 </details>
 <details>
   <summary>Gold Walkie-Talkie</summary>
 
-![image](https://raw.githubusercontent.com/Flaton1/walkie-talkie-mod/1.20.4/gallery/walkie_talkie_craft_gold.png)
+Replace Planks with Gold Ingot
 </details>
 <details>
   <summary>Diamond Walkie-Talkie</summary>
 
-![image](https://raw.githubusercontent.com/Flaton1/walkie-talkie-mod/1.20.4/gallery/walkie_talkie_craft_diamond.png)
+Replace Planks with Diamond
 </details>
 <details>
   <summary>Netherite Walkie-Talkie</summary>
@@ -88,7 +90,9 @@ This mod adds two-way radios with different upgrades.
 + Speaker Voice Duplication
 + Walkie-Talkie Range
 + Cross dimensional behavior
-## Credits
++ Need to hold the walkie-talkie to talk (Client)
++ Need to hold the walkie-talkie in hotbar to listen (Server)
+## Original credits
 ### Textures and models :
 + **4irwan**
 
