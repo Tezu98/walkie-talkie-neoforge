@@ -38,7 +38,7 @@ This mod adds two-way radios with different upgrades.
 + Volume category for speakers
 + Keybind to activate/deactivate the walkie-talkie
 + Speaker emit redstone
-+ [Curios](https://www.curseforge.com/minecraft/mc-mods/curios] support) support
++ [Curios](https://www.curseforge.com/minecraft/mc-mods/curios) support
 + [Create](https://www.curseforge.com/minecraft/mc-mods/create) Speaker block integration
 ## Upgrades
 + Wood: 128 block distance
