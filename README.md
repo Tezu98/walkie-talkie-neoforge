@@ -8,7 +8,8 @@
 > 
 > All the credits for the original mod go to the original author, **Flaton1**. This fork is maintained by **Tezu** and as of now, it does not support Fabric.
 > If you have any issues or feature requests, please report them [here](https://github.com/Tezu98/walkie-talkie-neoforge/issues)
-> This mod **requires [Simple Voice Chat](https://github.com/henkelmax/simple-voice-chat) and [Architectury API](https://github.com/architectury/architectury-api)**
+>
+>This mod **requires [Simple Voice Chat](https://github.com/henkelmax/simple-voice-chat) and [Architectury API](https://github.com/architectury/architectury-api)**
 <!-- prettier-ignore-end -->
 
 This mod adds two-way radios with different upgrades.
