@@ -2,7 +2,7 @@
 ![image](https://raw.githubusercontent.com/Flaton1/walkie-talkie-mod/1.20.4/gallery/walkie_talkie_large.png)
 <!-- prettier-ignore-start -->
 
-> **Fork Warning**
+> **Warning**
 >
 > This mod is a fork of [Simple Voice Chat Addon - Walkie-Talkie](https://github.com/Flaton1/walkie-talkie-mod)
 > 
